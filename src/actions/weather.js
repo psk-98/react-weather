@@ -8,16 +8,16 @@ export const fetchWeather = createAsyncThunk(
     if (city !== null) {
       try {
         const res = await axios.get(
-          `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.REACT_APP_OPENWEATHER_API_KEY}`,
+          `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.REACT_APP_OPENWEATHER_API_KEY}`
         )
         const { data } = await axios.get(
-          `https://api.openweathermap.org/data/2.5/onecall?lat=${
+          `https://api.openweathermap.org/data/3.0/onecall?lat=${
             res.data.coord.lat
           }&lon=${res.data.coord.lon}&units=${
             getState().units
           }&exclude=minutely,hourly,alerts&appid=${
             process.env.REACT_APP_OPENWEATHER_API_KEY
-          }`,
+          }`
         )
         return { data, res }
       } catch (err) {
@@ -27,7 +27,7 @@ export const fetchWeather = createAsyncThunk(
         return rejectWithValue(err?.response?.data)
       }
     }
-  },
+  }
 )
 export const changeUnits = createAsyncThunk(CHANGE_UNITS, async (unit) => {
   return unit
